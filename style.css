@@ -28,8 +28,8 @@
 
   /* Hero video / glass tuning */
   --hero-video-opacity:      0.75;
-  --hero-glass-tint:         rgba(6, 6, 12, 0.20);
-  --hero-glass-blur:         4px;
+  --hero-glass-tint:         rgba(6, 6, 12, 0.55);
+  --hero-glass-blur:         3px;
 }
 
 /* ── Light Mode ── */
@@ -49,8 +49,8 @@
   --modal-bg:    rgba(180, 180, 200, 0.50);
 
   --hero-video-opacity: 0.65;
-  --hero-glass-tint:    rgba(238, 240, 246, 0.20);
-  --hero-glass-blur:    4px;
+  --hero-glass-tint:    rgba(238, 240, 246, 0.55);
+  --hero-glass-blur:    3px;
 }
 
 [data-theme="light"] .hero-canvas    { opacity: 0.30; }
@@ -398,6 +398,7 @@ body::before {
   line-height:    1.05;          /* was 0.94 — caused overlap */
   letter-spacing: -2px;
   margin-bottom:  28px;
+  text-shadow:    0 2px 24px rgba(0,0,0,0.55);
 }
 
 /* Each line is a block */
@@ -433,6 +434,7 @@ body::before {
   max-width:     480px;
   line-height:   1.85;
   margin-bottom: 28px;
+  text-shadow:   0 1px 12px rgba(0,0,0,0.45);
 }
 
 /* Badges */
