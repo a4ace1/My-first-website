@@ -278,12 +278,9 @@ body::before {
 ============================================================ */
 .hero {
   padding:    60px 48px 64px;
-  border:        0.5px solid rgba(220, 20, 60, 0.18);
-  border-radius: 0 0 20px 20px;
   position:   relative;
   overflow:   hidden;
   isolation:  isolate; /* contain blending/stacking of video+glass layers */
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 40px rgba(0,0,0,0.35);
 }
 
 /* Ambient glows (sit above video/glass, below content — purely decorative) */
@@ -353,6 +350,9 @@ body::before {
   backdrop-filter:          blur(var(--hero-glass-blur)) saturate(130%);
   -webkit-backdrop-filter:  blur(var(--hero-glass-blur)) saturate(130%);
   border-bottom:   0.5px solid rgba(255,255,255,0.05);
+  box-shadow:
+    inset 0 0 0 1px rgba(220, 20, 60, 0.28),
+    inset 0 1px 0 rgba(255,255,255,0.08);
   pointer-events:  none;
 }
 
