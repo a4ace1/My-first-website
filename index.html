@@ -8,6 +8,470 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── LIFE AFTER BCA BANNER ── */
+    .lab-banner {
+      max-width:     880px;
+      margin:        0 auto;
+      padding:       0 48px;
+      margin-top:    52px;
+    }
+
+    .lab-card {
+      position:        relative;
+      border-radius:   16px;
+      overflow:        hidden;
+      border:          0.5px solid rgba(220, 20, 60, 0.35);
+      background:      rgba(220, 20, 60, 0.04);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow:      0 4px 40px rgba(220, 20, 60, 0.10),
+                       inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      display:         flex;
+      align-items:     stretch;
+      gap:             0;
+      transition:      border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .lab-card:hover {
+      border-color: rgba(220, 20, 60, 0.60);
+      box-shadow:   0 8px 56px rgba(220, 20, 60, 0.18),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    /* Left accent stripe */
+    .lab-stripe {
+      width:       4px;
+      flex-shrink: 0;
+      background:  linear-gradient(180deg, #dc143c 0%, rgba(220, 20, 60, 0.30) 100%);
+      box-shadow:  4px 0 24px rgba(220, 20, 60, 0.25);
+    }
+
+    /* Ambient glow blob */
+    .lab-card::before {
+      content:        '';
+      position:       absolute;
+      top:            -60px;
+      right:          -60px;
+      width:          280px;
+      height:         280px;
+      background:     radial-gradient(circle, rgba(220, 20, 60, 0.09) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .lab-body {
+      flex:       1;
+      padding:    28px 28px 28px 28px;
+      display:    flex;
+      align-items: center;
+      justify-content: space-between;
+      gap:        24px;
+      position:   relative;
+      z-index:    1;
+    }
+
+    .lab-left { flex: 1; min-width: 0; }
+
+    .lab-eyebrow {
+      font-family:    var(--mono);
+      font-size:      9px;
+      letter-spacing: 3px;
+      color:          var(--accent);
+      margin-bottom:  10px;
+      display:        flex;
+      align-items:    center;
+      gap:            8px;
+    }
+    .lab-eyebrow::before {
+      content:    '';
+      width:      18px;
+      height:     1px;
+      background: var(--accent);
+      opacity:    0.6;
+      flex-shrink: 0;
+    }
+
+    .lab-title {
+      font-family:    var(--mono);
+      font-size:      22px;
+      font-weight:    800;
+      color:          var(--text);
+      letter-spacing: -0.5px;
+      margin-bottom:  8px;
+      line-height:    1.15;
+    }
+    .lab-title .lab-accent { color: var(--accent); }
+
+    .lab-desc {
+      font-size:   12px;
+      color:       var(--muted);
+      line-height: 1.8;
+      max-width:   440px;
+    }
+
+    .lab-pills {
+      display:    flex;
+      gap:        7px;
+      margin-top: 14px;
+      flex-wrap:  wrap;
+    }
+    .lab-pill {
+      font-family:    var(--mono);
+      font-size:      9px;
+      color:          var(--muted);
+      border:         0.5px solid var(--border-mid);
+      padding:        3px 9px;
+      border-radius:  4px;
+      background:     rgba(255, 255, 255, 0.04);
+      letter-spacing: 0.5px;
+    }
+    .lab-pill.hot {
+      color:      var(--accent);
+      border-color: rgba(220, 20, 60, 0.35);
+      background: rgba(220, 20, 60, 0.07);
+    }
+
+    .lab-right {
+      flex-shrink: 0;
+      display:     flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap:         14px;
+    }
+
+    .lab-stats {
+      display:    flex;
+      gap:        20px;
+    }
+    .lab-stat {
+      text-align: center;
+    }
+    .lab-stat-val {
+      font-family: var(--mono);
+      font-size:   20px;
+      font-weight: 800;
+      color:       var(--accent);
+      display:     block;
+      line-height: 1;
+    }
+    .lab-stat-lbl {
+      font-family:    var(--mono);
+      font-size:      8px;
+      color:          var(--muted);
+      letter-spacing: 1.5px;
+      margin-top:     4px;
+      display:        block;
+    }
+
+    .lab-cta {
+      display:         inline-flex;
+      align-items:     center;
+      gap:             8px;
+      font-family:     var(--mono);
+      font-size:       11px;
+      font-weight:     700;
+      letter-spacing:  1.5px;
+      color:           #fff;
+      background:      linear-gradient(135deg, rgba(220,20,60,0.92), rgba(200,10,40,0.80));
+      padding:         11px 22px;
+      text-decoration: none;
+      border-radius:   6px;
+      border:          0.5px solid rgba(220, 20, 60, 0.55);
+      transition:      transform 0.15s, box-shadow 0.2s;
+      box-shadow:      0 4px 20px rgba(220, 20, 60, 0.28),
+                       inset 0 1px 0 rgba(255,255,255,0.10);
+      white-space:     nowrap;
+    }
+    .lab-cta:hover {
+      transform:  translateY(-2px);
+      box-shadow: 0 8px 32px rgba(220, 20, 60, 0.44),
+                  inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+
+    /* Arrow icon */
+    .lab-arrow {
+      font-size:    18px;
+      color:        var(--accent);
+      opacity:      0.5;
+      transition:   opacity 0.2s, transform 0.2s;
+      user-select:  none;
+    }
+    .lab-card:hover .lab-arrow {
+      opacity:   1;
+      transform: translateX(4px);
+    }
+
+    @media (max-width: 760px) {
+      .lab-banner  { padding: 0 20px; margin-top: 36px; }
+      .lab-body    { flex-direction: column; align-items: flex-start; padding: 22px 20px; }
+      .lab-right   { align-items: flex-start; flex-direction: row; align-items: center; flex-wrap: wrap; }
+      .lab-stats   { gap: 14px; }
+      .lab-title   { font-size: 18px; }
+      .lab-arrow   { display: none; }
+    }
+  </style>
+
+  <style>
+    /* ════════════════════════════════════════════════════════
+       VENT MODE — "I HATE TAKING BCA" stress relief button
+       Self-contained section. Reuses tokens from style.css
+       (--bg, --accent, --text, --muted, --mono, --border-mid)
+    ════════════════════════════════════════════════════════ */
+
+    .vent-card {
+      position:        relative;
+      text-align:       center;
+      background:       rgba(255, 255, 255, 0.03);
+      border:           0.5px solid var(--border-mid);
+      border-radius:    14px;
+      padding:          48px 28px;
+      backdrop-filter:  var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      box-shadow:       0 4px 40px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.06);
+      overflow:         hidden;
+      margin-bottom:    24px;
+    }
+    .vent-card::before {
+      content:    '';
+      position:   absolute;
+      top: 0; left: 0; right: 0;
+      height:     1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      pointer-events: none;
+    }
+
+    .vent-eyebrow {
+      font-family:    var(--mono);
+      font-size:      9px;
+      color:          var(--accent);
+      letter-spacing: 3px;
+      margin-bottom:  18px;
+      display:        flex;
+      align-items:    center;
+      justify-content: center;
+      gap:            10px;
+    }
+    .vent-eyebrow::before, .vent-eyebrow::after { content:''; width:22px; height:1px; background:var(--accent); opacity:.5; }
+
+    .vent-counter {
+      font-family:    var(--mono);
+      font-size:      11px;
+      color:          var(--muted);
+      letter-spacing: 1.5px;
+      margin-bottom:  28px;
+    }
+    .vent-counter strong { color: var(--accent); font-size: 15px; font-weight: 800; }
+
+    .chaos-btn {
+      font-family:     var(--mono);
+      font-size:       clamp(14px, 2.6vw, 19px);
+      font-weight:     800;
+      letter-spacing:  1px;
+      color:           #fff;
+      cursor:          pointer;
+      border:          1px solid rgba(220, 20, 60, 0.6);
+      border-radius:   12px;
+      padding:         20px 30px;
+      background:      linear-gradient(135deg, rgba(220,20,60,0.92), rgba(160,8,32,0.85));
+      box-shadow:      0 8px 36px rgba(220,20,60,0.32), inset 0 1px 0 rgba(255,255,255,0.12);
+      transition:      transform 0.12s ease, box-shadow 0.2s ease;
+      animation:       vent-idle-pulse 2.4s ease-in-out infinite;
+    }
+    .chaos-btn:hover  { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 50px rgba(220,20,60,0.48); }
+    .chaos-btn.pressed{ transform: scale(0.92) rotate(-1deg) !important; }
+    @keyframes vent-idle-pulse {
+      0%, 100% { box-shadow: 0 8px 36px rgba(220,20,60,0.32), inset 0 1px 0 rgba(255,255,255,0.12); }
+      50%       { box-shadow: 0 8px 54px rgba(220,20,60,0.55), inset 0 1px 0 rgba(255,255,255,0.16); }
+    }
+
+    .vent-message {
+      margin-top:    26px;
+      min-height:    32px;
+      font-family:   var(--mono);
+      font-size:     13px;
+      color:         var(--text);
+      letter-spacing: 0.4px;
+      line-height:   1.7;
+    }
+    .vent-glitch {
+      text-shadow: 1px 0 var(--accent), -1px 0 #3b82f6;
+      animation:   vent-glitch-flicker 0.12s steps(2) infinite;
+    }
+    @keyframes vent-glitch-flicker {
+      0%   { transform: translateX(0);   filter: none; }
+      50%  { transform: translateX(1px); filter: blur(0.4px); }
+      100% { transform: translateX(-1px); filter: none; }
+    }
+
+    /* Screen shake — applied to <body> during meltdown */
+    body.vent-shake { animation: vent-screen-shake 0.35s linear infinite; }
+    @keyframes vent-screen-shake {
+      0%   { transform: translate(0,0) rotate(0); }
+      20%  { transform: translate(-6px,4px) rotate(-0.4deg); }
+      40%  { transform: translate(5px,-5px) rotate(0.5deg); }
+      60%  { transform: translate(-4px,-3px) rotate(-0.3deg); }
+      80%  { transform: translate(6px,3px) rotate(0.4deg); }
+      100% { transform: translate(0,0) rotate(0); }
+    }
+    body.vent-heavy-glitch::before { animation: vent-bg-glitch 0.25s steps(2) infinite; }
+    @keyframes vent-bg-glitch {
+      0%   { filter: hue-rotate(0deg) contrast(1); }
+      50%  { filter: hue-rotate(25deg) contrast(1.3) saturate(1.6); }
+      100% { filter: hue-rotate(-15deg) contrast(1.1); }
+    }
+
+    /* Red flash overlay */
+    .vent-flash {
+      position:       fixed;
+      inset:          0;
+      z-index:        700;
+      pointer-events: none;
+      background:     rgba(220, 20, 60, 0.32);
+      opacity:        0;
+    }
+    .vent-flash.vent-flash-active { animation: vent-flash-pulse 0.25s steps(1) infinite; }
+    @keyframes vent-flash-pulse { 0% {opacity:0;} 50% {opacity:1;} 100% {opacity:0;} }
+
+    /* Meltdown layer — bouncing messages + explosion bursts */
+    .vent-meltdown-layer {
+      position:       fixed;
+      inset:          0;
+      z-index:        600;
+      pointer-events: none;
+      overflow:       hidden;
+    }
+    .vent-bounce-msg {
+      position:      absolute;
+      top: 0; left: 0;
+      font-family:   var(--mono);
+      font-weight:   800;
+      font-size:     13px;
+      letter-spacing: 1px;
+      white-space:   nowrap;
+      text-shadow:   0 0 14px currentColor, 0 2px 6px rgba(0,0,0,0.6);
+      will-change:   transform;
+    }
+    .vent-explosion-burst {
+      position:      absolute;
+      left: 0; top: 0;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      transform:     translate(-50%,-50%);
+      pointer-events: none;
+      background: radial-gradient(circle, #fff7d6 0%, #ffb020 28%, var(--accent) 55%, transparent 75%);
+      animation:  vent-burst-grow 0.65s ease-out forwards;
+    }
+    @keyframes vent-burst-grow {
+      0%   { transform: translate(-50%,-50%) scale(0.2); opacity: 1; }
+      100% { transform: translate(-50%,-50%) scale(18);  opacity: 0; }
+    }
+
+    /* Apocalypse layer */
+    .vent-apocalypse-layer {
+      position:        fixed;
+      inset:           0;
+      z-index:         900;
+      background:      #000;
+      display:         flex;
+      flex-direction:  column;
+      align-items:     center;
+      justify-content: center;
+      opacity:         0;
+      pointer-events:  none;
+      transition:      opacity 0.4s ease;
+      overflow:        hidden;
+    }
+    .vent-apocalypse-layer.vent-visible { opacity: 1; pointer-events: all; }
+    .vent-flood-layer { position: absolute; inset: 0; }
+    .vent-flood-msg {
+      position:      absolute;
+      font-family:   var(--mono);
+      font-weight:   700;
+      font-size:     11px;
+      color:         var(--accent);
+      opacity:       0;
+      letter-spacing: 1px;
+      animation:     vent-flood-fade 0.9s ease-out forwards;
+    }
+    @keyframes vent-flood-fade {
+      0%   { opacity: 0; transform: scale(0.6); }
+      20%  { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.1); }
+    }
+    .vent-apoc-big-text {
+      font-family:  var(--mono);
+      font-weight:  800;
+      font-size:    clamp(15px, 2.6vw, 24px);
+      color:        #fff;
+      text-align:   center;
+      max-width:    720px;
+      padding:      0 24px;
+      line-height:  1.5;
+      text-shadow:  0 0 20px var(--accent);
+      z-index:      2;
+    }
+    .vent-apoc-loading {
+      font-family:   var(--mono);
+      font-size:     11px;
+      color:         #22c55e;
+      white-space:   pre-line;
+      text-align:    left;
+      z-index:       2;
+      letter-spacing: 0.5px;
+      line-height:   1.9;
+    }
+
+    /* Volume controls — sits opposite the music player */
+    .vent-vol-panel {
+      position:        fixed;
+      bottom:          24px;
+      left:            24px;
+      z-index:         300;
+      display:         flex;
+      align-items:     center;
+      gap:             10px;
+      background:      rgba(6, 6, 12, 0.62);
+      border:          0.5px solid rgba(255, 255, 255, 0.12);
+      border-radius:   40px;
+      padding:         8px 16px;
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      box-shadow:      0 8px 28px rgba(0,0,0,0.5);
+    }
+    .vent-vol-btn {
+      width:           30px;
+      height:          30px;
+      border-radius:   50%;
+      border:          none;
+      cursor:          pointer;
+      background:      linear-gradient(135deg, rgba(220,20,60,0.9), rgba(160,8,32,0.85));
+      color:           #fff;
+      font-size:       13px;
+      display:         flex;
+      align-items:     center;
+      justify-content: center;
+      flex-shrink:     0;
+    }
+    .vent-vol-slider { width: 80px; accent-color: var(--accent); }
+    .vent-vol-label {
+      font-family:    var(--mono);
+      font-size:      9px;
+      color:          var(--muted);
+      letter-spacing: 1px;
+      display:        flex;
+      align-items:    center;
+      gap:            5px;
+      user-select:    none;
+      cursor:         pointer;
+    }
+    .vent-vol-label input { accent-color: var(--accent); }
+
+    @media (max-width: 760px) {
+      .vent-vol-label span { display: none; }
+      .vent-vol-panel { padding: 6px 12px; gap: 8px; left: 16px; bottom: 16px; }
+      .vent-card { padding: 36px 20px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -21,6 +485,7 @@
       <span class="nav-clock" id="navClock"></span>
       <a href="#semesters">Semesters</a>
       <a href="#games">Games</a>
+      <a href="#vent">Vent</a>
       <a href="#about">About</a>
       <button class="copy-link-btn" id="copyLinkBtn" title="Copy site link">🔗 Share</button>
       <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode" aria-label="Toggle theme">☀</button>
@@ -32,6 +497,7 @@
   <div class="nav-mobile-menu" id="navMobileMenu">
     <a href="#semesters" class="nm-link">Semesters</a>
     <a href="#games" class="nm-link">Games</a>
+    <a href="#vent" class="nm-link">Vent</a>
     <a href="#about" class="nm-link">About</a>
     <a href="https://instagram.com/a4ace_1" target="_blank" class="nm-link">Instagram ↗</a>
   </div>
@@ -79,8 +545,55 @@
     </div>
   </section>
 
-  <!-- STYLISH GLOWING DIVIDER -->
+  <!-- GLOWING DIVIDER -->
   <div class="hero-divider"></div>
+
+  <!-- ══════════════════════════════════════════
+       LIFE AFTER BCA BANNER
+       Placed here: first thing after the hero,
+       before notes — equal weight, not afterthought
+  ══════════════════════════════════════════ -->
+  <div class="lab-banner">
+    <a href="life-after-bca.html" class="lab-card" style="text-decoration:none;">
+      <div class="lab-stripe"></div>
+      <div class="lab-body">
+        <div class="lab-left">
+          <div class="lab-eyebrow">// NEW · CAREER EXPLORER</div>
+          <div class="lab-title">
+            Life After <span class="lab-accent">BCA</span>
+          </div>
+          <div class="lab-desc">
+            15 career paths. Interactive roadmaps. Personalized quiz. Job readiness score.
+            Know exactly where you're headed — and what to do next.
+          </div>
+          <div class="lab-pills">
+            <span class="lab-pill hot">🔥 Roadmaps</span>
+            <span class="lab-pill hot">Career Quiz</span>
+            <span class="lab-pill">₹4L – ₹30L+ Salaries</span>
+            <span class="lab-pill">15 Paths</span>
+            <span class="lab-pill">Free</span>
+          </div>
+        </div>
+
+        <div class="lab-right">
+          <div class="lab-stats">
+            <div class="lab-stat">
+              <span class="lab-stat-val">15</span>
+              <span class="lab-stat-lbl">CAREERS</span>
+            </div>
+            <div class="lab-stat">
+              <span class="lab-stat-val">60+</span>
+              <span class="lab-stat-lbl">STEPS</span>
+            </div>
+          </div>
+          <span class="lab-cta">Explore Careers ↗</span>
+        </div>
+
+        <div class="lab-arrow">›</div>
+      </div>
+    </a>
+  </div>
+  <!-- ══ END LIFE AFTER BCA BANNER ══ -->
 
   <!-- SEMESTERS -->
   <main class="container" id="semesters">
@@ -259,6 +772,19 @@
     </div>
   </section>
 
+  <!-- ══════════════════════════════════════════
+       VENT MODE — "I HATE TAKING BCA" stress button
+  ══════════════════════════════════════════ -->
+  <section class="container" id="vent">
+    <div class="section-label">// VENT MODE</div>
+    <div class="vent-card">
+      <div class="vent-eyebrow">STRESS RELIEF MACHINE</div>
+      <div class="vent-counter">SEMESTERS DESTROYED: <strong id="counterVal">0</strong></div>
+      <button class="chaos-btn" id="chaosBtn">💀 I HATE TAKING BCA</button>
+      <div class="vent-message" id="messageBox"></div>
+    </div>
+  </section>
+
   <!-- ABOUT -->
   <section class="about-section container" id="about">
     <div class="section-label">// ABOUT</div>
@@ -295,6 +821,20 @@
     </div>
   </div>
 
+  <!-- VENT MODE — fixed overlay layers + volume controls -->
+  <div class="vent-flash" id="flashOverlay"></div>
+  <div class="vent-meltdown-layer" id="meltdownLayer"></div>
+  <div class="vent-apocalypse-layer" id="apocalypseLayer">
+    <div class="vent-flood-layer" id="apocalypseFlood"></div>
+    <div class="vent-apoc-big-text" id="apocalypseBigText"></div>
+    <div class="vent-apoc-loading" id="apocalypseLoading"></div>
+  </div>
+  <div class="vent-vol-panel">
+    <button class="vent-vol-btn" id="muteBtn" title="Mute / unmute">🔊</button>
+    <input type="range" class="vent-vol-slider" id="volSlider" min="0" max="100" value="70" title="Vent volume" />
+    <label class="vent-vol-label"><input type="checkbox" id="sfxToggle" checked /><span>SFX</span></label>
+  </div>
+
   <!-- RESOURCE MODAL -->
   <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
     <div class="modal">
@@ -317,5 +857,322 @@
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
   <script src="script.js"></script>
+
+  <!-- ══════════════════════════════════════════
+       VENT MODE SCRIPT — synthesized SFX, meltdown
+       mode, apocalypse easter egg, volume controls.
+       Self-contained, does not touch script.js.
+  ══════════════════════════════════════════ -->
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+
+  /* ══ AUDIO ENGINE — sounds synthesized live, no audio files needed ══ */
+  var AudioEngine = (function () {
+    var ctx = null, masterGain = null;
+
+    function getSettings(){
+      try { return Object.assign({muted:false, sfxOn:true, volume:0.7}, JSON.parse(localStorage.getItem("bcaChaosAudio")||"{}")); }
+      catch(e){ return {muted:false, sfxOn:true, volume:0.7}; }
+    }
+    function saveSettings(s){ localStorage.setItem("bcaChaosAudio", JSON.stringify(s)); applySettings(); }
+    function applySettings(){ if(masterGain) masterGain.gain.value = getSettings().muted ? 0 : getSettings().volume; }
+
+    function ensureCtx(){
+      if(!ctx){
+        ctx = new (window.AudioContext||window.webkitAudioContext)();
+        masterGain = ctx.createGain();
+        masterGain.connect(ctx.destination);
+        applySettings();
+      }
+      if(ctx.state === "suspended") ctx.resume();
+      return ctx;
+    }
+
+    function noiseBuffer(duration){
+      var c = ensureCtx();
+      var buf = c.createBuffer(1, Math.max(1, c.sampleRate*duration), c.sampleRate);
+      var d = buf.getChannelData(0);
+      for(var i=0;i<d.length;i++) d[i] = Math.random()*2-1;
+      return buf;
+    }
+    function env(gainNode, attack, peak, decay, t0){
+      gainNode.gain.setValueAtTime(0, t0);
+      gainNode.gain.linearRampToValueAtTime(peak, t0+attack);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, t0+attack+decay);
+    }
+
+    function playTone(freq, type, duration, opts){
+      opts = opts || {};
+      if(!getSettings().sfxOn) return;
+      var c = ensureCtx(); var t0 = c.currentTime;
+      var osc = c.createOscillator(); var gain = c.createGain();
+      osc.type = type; osc.frequency.setValueAtTime(freq, t0);
+      if(opts.freqEnd) osc.frequency.exponentialRampToValueAtTime(opts.freqEnd, t0+duration);
+      env(gain, opts.attack!==undefined?opts.attack:0.01, opts.peak!==undefined?opts.peak:0.8, duration, t0);
+      osc.connect(gain); gain.connect(masterGain);
+      osc.start(t0); osc.stop(t0+duration+0.05);
+    }
+    function playNoise(duration, opts){
+      opts = opts || {};
+      if(!getSettings().sfxOn) return;
+      var c = ensureCtx(); var t0 = c.currentTime;
+      var src = c.createBufferSource(); src.buffer = noiseBuffer(duration);
+      var filt = c.createBiquadFilter(); filt.type = opts.filterType||"lowpass"; filt.frequency.value = opts.filterFreq||1000;
+      var gain = c.createGain(); env(gain, opts.attack!==undefined?opts.attack:0.005, opts.peak!==undefined?opts.peak:0.9, duration, t0);
+      src.connect(filt); filt.connect(gain); gain.connect(masterGain);
+      src.start(t0);
+    }
+
+    function explosion(){ playNoise(0.6,{filterFreq:800,peak:1}); playTone(60,"sine",0.5,{freqEnd:30,peak:0.9}); }
+    function vineBoom(){ playTone(50,"sine",0.8,{freqEnd:32,peak:1,attack:0.01}); playNoise(0.2,{filterFreq:400,peak:0.6}); }
+    function metalImpact(){ playTone(900,"square",0.15,{freqEnd:200,peak:0.5}); playTone(450,"sawtooth",0.2,{freqEnd:120,peak:0.4}); }
+    function bassDrop(){ playTone(420,"sine",1.1,{freqEnd:28,peak:1,attack:0.05}); playNoise(0.3,{filterFreq:200,peak:0.5}); }
+    function windowsError(){ playTone(523,"square",0.15,{peak:0.4}); setTimeout(function(){playTone(392,"square",0.2,{peak:0.4});},130); }
+    function cinematicBoom(){ playNoise(1.4,{filterFreq:300,peak:0.8,attack:0.05}); playTone(40,"sine",1.4,{freqEnd:20,peak:1}); }
+    function typingBlip(){ playTone(1700+Math.random()*500,"square",0.028,{peak:0.14,attack:0.001}); }
+    function alarmSiren(durationSec){
+      durationSec = durationSec || 2;
+      if(!getSettings().sfxOn) return;
+      var c = ensureCtx(); var t0 = c.currentTime;
+      var osc = c.createOscillator(); var gain = c.createGain();
+      osc.type="sawtooth"; gain.gain.value=0.4;
+      osc.connect(gain); gain.connect(masterGain);
+      var steps = Math.max(2, Math.floor(durationSec/0.4));
+      for(var i=0;i<steps;i++) osc.frequency.setValueAtTime(i%2===0?880:660, t0+i*0.4);
+      osc.start(t0); osc.stop(t0+durationSec);
+    }
+
+    var BUTTON_SOUNDS = [explosion, vineBoom, metalImpact, bassDrop, windowsError, cinematicBoom, function(){alarmSiren(0.8);}];
+    function randomButtonSound(){ BUTTON_SOUNDS[Math.floor(Math.random()*BUTTON_SOUNDS.length)](); }
+
+    return { ensureCtx:ensureCtx, getSettings:getSettings, saveSettings:saveSettings, randomButtonSound:randomButtonSound, alarmSiren:alarmSiren, bassDrop:bassDrop, explosion:explosion, typingBlip:typingBlip };
+  })();
+
+  /* ══ CONTENT ══ */
+  var NORMAL_MESSAGES = [
+    "DBMS has been permanently deleted.",
+    "Your assignment has spontaneously combusted.",
+    "Attendance record: erased.",
+    "Internal marks set to negative infinity.",
+    "Viva scheduled in another dimension.",
+    "The C++ compiler achieved sentience and quit.",
+    "OS lecture notes are now binary ash.",
+    "Exam hall has been teleported to the moon.",
+    "Your project report turned into a haiku.",
+    "404: Semester not found.",
+    "EVS syllabus replaced with cat videos.",
+    "Professor has entered stealth mode.",
+    "Your CGPA briefly visited the negative numbers.",
+    "Java OOP has been deprecated. Permanently.",
+    "The library WiFi password changed itself out of spite."
+  ];
+  var MELTDOWN_MESSAGES = [
+    "DBMS DELETED","ATTENDANCE LOST","EXAM CANCELLED","VIVA ESCAPED",
+    "404 SEMESTER NOT FOUND","ASSIGNMENT DESTROYED","INTERNAL MARKS MAXED"
+  ];
+  var APOCALYPSE_LOADING = [
+    "Removing DBMS...","Removing CA...","Removing PST...",
+    "Removing Assignments...","Removing Attendance..."
+  ];
+
+  function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+  /* ══ COUNTER ══ */
+  var counterEl = document.getElementById("counterVal");
+  function getCounter(){ return parseInt(localStorage.getItem("bcaChaosCounter")||"0", 10); }
+  function setCounter(v){ localStorage.setItem("bcaChaosCounter", String(v)); counterEl.textContent = v.toLocaleString(); }
+  function addCounter(n){ setCounter(getCounter()+n); }
+  setCounter(getCounter());
+
+  /* ══ TYPEWRITER REVEAL ══ */
+  function typewriterReveal(text, el, speed){
+    speed = speed || 32;
+    return new Promise(function(resolve){
+      el.textContent=""; el.classList.add("vent-glitch");
+      var i=0;
+      var iv=setInterval(function(){
+        el.textContent += text[i];
+        AudioEngine.typingBlip();
+        i++;
+        if(i>=text.length){ clearInterval(iv); el.classList.remove("vent-glitch"); resolve(); }
+      }, speed);
+    });
+  }
+
+  /* ══ SCREEN EFFECTS ══ */
+  function screenShake(duration){
+    duration = duration || 2000;
+    document.body.classList.add("vent-shake");
+    setTimeout(function(){ document.body.classList.remove("vent-shake"); }, duration);
+  }
+  function redFlash(duration){
+    duration = duration || 2000;
+    var el=document.getElementById("flashOverlay");
+    el.classList.add("vent-flash-active");
+    setTimeout(function(){ el.classList.remove("vent-flash-active"); }, duration);
+  }
+  function spawnExplosionBurst(x,y){
+    var layer=document.getElementById("meltdownLayer");
+    var b=document.createElement("div");
+    b.className="vent-explosion-burst"; b.style.left=x+"px"; b.style.top=y+"px";
+    layer.appendChild(b);
+    setTimeout(function(){ b.remove(); }, 700);
+  }
+  function spawnBouncingMessage(text, duration){
+    duration = duration || 2200;
+    var layer=document.getElementById("meltdownLayer");
+    var span=document.createElement("span");
+    span.className="vent-bounce-msg"; span.textContent=text;
+    span.style.color=["#dc143c","#eab308","#3b82f6","#22c55e","#a855f7"][Math.floor(Math.random()*5)];
+    layer.appendChild(span);
+    var x=Math.random()*(window.innerWidth-220);
+    var y=Math.random()*(window.innerHeight-120);
+    var vx=(Math.random()<0.5?-1:1)*(2.5+Math.random()*3);
+    var vy=(Math.random()<0.5?-1:1)*(2.5+Math.random()*3);
+    var w=span.offsetWidth||160, h=span.offsetHeight||20;
+    var raf;
+    function step(){
+      x+=vx; y+=vy;
+      if(x<=0||x+w>=window.innerWidth) vx*=-1;
+      if(y<=0||y+h>=window.innerHeight) vy*=-1;
+      span.style.transform="translate("+x+"px,"+y+"px)";
+      raf=requestAnimationFrame(step);
+    }
+    step();
+    setTimeout(function(){ cancelAnimationFrame(raf); span.remove(); }, duration);
+  }
+
+  /* ══ ⚠ MELTDOWN MODE (10% chance) ══ */
+  function triggerMeltdown(){
+    screenShake(2000);
+    redFlash(2200);
+    AudioEngine.alarmSiren(2);
+    document.body.classList.add("vent-heavy-glitch");
+
+    MELTDOWN_MESSAGES.forEach(function(m,i){ setTimeout(function(){ spawnBouncingMessage(m); }, i*130); });
+    for(var i=0;i<8;i++){
+      setTimeout(function(){ spawnExplosionBurst(Math.random()*window.innerWidth, Math.random()*window.innerHeight); }, i*220);
+    }
+
+    return wait(2300).then(function(){
+      document.body.classList.remove("vent-heavy-glitch");
+      document.getElementById("meltdownLayer").innerHTML="";
+      AudioEngine.explosion();
+      spawnExplosionBurst(window.innerWidth/2, window.innerHeight/2);
+      return typewriterReveal("💀 TOTAL ACADEMIC DESTRUCTION ACHIEVED 💀", document.getElementById("messageBox"), 24);
+    });
+  }
+
+  /* ══ ☠ APOCALYPSE MODE (1% chance) ══ */
+  function triggerApocalypse(){
+    addCounter(100);
+    var layer=document.getElementById("apocalypseLayer");
+    var flood=document.getElementById("apocalypseFlood");
+    var bigText=document.getElementById("apocalypseBigText");
+    var loadingEl=document.getElementById("apocalypseLoading");
+    flood.innerHTML=""; bigText.textContent=""; loadingEl.textContent="";
+
+    layer.classList.add("vent-visible");
+    AudioEngine.alarmSiren(1.5);
+    AudioEngine.bassDrop();
+
+    var floodPool = MELTDOWN_MESSAGES.concat(NORMAL_MESSAGES.map(function(m){ return m.toUpperCase(); }));
+    for(var i=0;i<110;i++){
+      (function(i){
+        setTimeout(function(){
+          var span=document.createElement("span");
+          span.className="vent-flood-msg";
+          span.textContent=floodPool[Math.floor(Math.random()*floodPool.length)];
+          span.style.left=(Math.random()*88)+"%";
+          span.style.top=(Math.random()*88)+"%";
+          flood.appendChild(span);
+          setTimeout(function(){ span.remove(); }, 900);
+        }, i*22);
+      })(i);
+    }
+
+    return wait(2600).then(function(){
+      flood.innerHTML="";
+      return typewriterReveal("CONGRATULATIONS. YOU HAVE SUCCESSFULLY DELETED THE ENTIRE BCA DEPARTMENT.", bigText, 16);
+    }).then(function(){
+      return wait(700);
+    }).then(function(){
+      bigText.textContent="";
+      var p = Promise.resolve();
+      APOCALYPSE_LOADING.forEach(function(line){
+        p = p.then(function(){
+          loadingEl.textContent += line + "\n";
+          AudioEngine.typingBlip();
+          return wait(420);
+        });
+      });
+      return p;
+    }).then(function(){
+      return wait(300);
+    }).then(function(){
+      loadingEl.textContent += "100% COMPLETE";
+      AudioEngine.explosion();
+      return wait(1400);
+    }).then(function(){
+      layer.classList.remove("vent-visible");
+      loadingEl.textContent=""; bigText.textContent="";
+    });
+  }
+
+  /* ══ MAIN BUTTON HANDLER ══ */
+  var bigEventRunning = false;
+  var chaosBtn = document.getElementById("chaosBtn");
+
+  chaosBtn.addEventListener("click", function(){
+    AudioEngine.ensureCtx();
+    addCounter(1);
+    AudioEngine.randomButtonSound();
+
+    chaosBtn.classList.add("pressed");
+    setTimeout(function(){ chaosBtn.classList.remove("pressed"); }, 130);
+
+    if(bigEventRunning) return; // sound + counter still fire on every click
+
+    var roll = Math.random();
+    if(roll < 0.01){
+      bigEventRunning = true;
+      triggerApocalypse().then(function(){ bigEventRunning = false; });
+    } else if(roll < 0.11){
+      bigEventRunning = true;
+      triggerMeltdown().then(function(){ bigEventRunning = false; });
+    } else {
+      var msg = NORMAL_MESSAGES[Math.floor(Math.random()*NORMAL_MESSAGES.length)];
+      typewriterReveal(msg, document.getElementById("messageBox"));
+    }
+  });
+
+  /* ══ VOLUME CONTROLS ══ */
+  var muteBtn = document.getElementById("muteBtn");
+  var sfxToggle = document.getElementById("sfxToggle");
+  var volSlider = document.getElementById("volSlider");
+
+  function refreshControls(){
+    var s = AudioEngine.getSettings();
+    muteBtn.textContent = s.muted ? "🔇" : "🔊";
+    sfxToggle.checked = s.sfxOn;
+    volSlider.value = Math.round(s.volume*100);
+  }
+  muteBtn.addEventListener("click", function(){
+    var s = AudioEngine.getSettings(); s.muted = !s.muted;
+    AudioEngine.saveSettings(s); refreshControls();
+  });
+  sfxToggle.addEventListener("change", function(){
+    var s = AudioEngine.getSettings(); s.sfxOn = sfxToggle.checked;
+    AudioEngine.saveSettings(s);
+  });
+  volSlider.addEventListener("input", function(){
+    var s = AudioEngine.getSettings(); s.volume = volSlider.value/100;
+    AudioEngine.saveSettings(s);
+  });
+  refreshControls();
+
+  }); // end DOMContentLoaded
+  </script>
 </body>
 </html>
